@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<meta charset=utf-8 />
+<meta http-equiv=X-UA-Compatible content=IE=edge>
+<title>Polar Calendar</title>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<link rel=stylesheet href=main.css>
+
+<header class=hidden>
+    <label>
+        <span>Start Date:</span>
+        <input id=sd type=date>
+    </label>
+
+    <label>
+        <span>Ending Date:</span>
+        <input id=ed type=date>
+    </label>
+
+    <label>
+        <span>Canvas Size</span>
+        <span id=csv></span>
+        <input id=cs type=range max=10000 min=1000 step=1000>
+    </label>
+
+    <label>
+        <input id=so type=checkbox>
+        <span>Cross off past days?</span>
+    </label>
+
+    <label>
+        <input id=ci type=checkbox>
+        <span>Circle start and end date?</span>
+    </label>
+
+    <input id=ge value=Generate type=button>
+
+</header>
+
+<input id=btnMenu type=button value="&#8801;">
+
+<main>
+    <canvas></canvas>
+</main>
+
+<script src="main.js" type=module></script>

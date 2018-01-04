@@ -1,0 +1,120 @@
+canvas {
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+body {
+    margin: 0;
+    color: #fff;
+    background: #263238;
+    font-family: sans-serif;
+}
+
+label {
+    display: block;
+    margin: 16px;
+}
+
+@media all and (orientation: portrait) {
+    header {
+        overflow-y: auto;
+        height: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(0);
+    }
+    header.hidden {
+        transform: translateY(-100%);
+    }
+    header.hidden~main {
+        top: 0;
+    }
+    main {
+        left: 0;
+        top: 50%;
+    }
+    #btnMenu {
+        top: 50%;
+        right: 0;
+    }
+    header.hidden~#btnMenu {
+        top: 0;
+    }
+    canvas {
+        width: 100%;
+    }
+}
+
+@media all and (orientation: landscape) {
+    header {
+        width: 50%;
+        transform: translateX(0);
+    }
+    header.hidden {
+        transform: translateX(-100%);
+    }
+    header.hidden~main {
+        left: 0;
+    }
+    main {
+        left: 50%;
+        top: 0;
+    }
+    #btnMenu {
+        top: 0;
+    }
+    header.hidden~#btnMenu {
+        left: 0;
+    }
+    header~#btnMenu {
+        left: 50%;
+    }
+    header.hidden~footer {
+        left: 0;
+    }
+    canvas {
+        height: 100%;
+    }
+}
+
+header {
+    z-index: 3;
+    transition: transform .5s ease;
+    color: #000;
+    background: #DFDFDF;
+    position: absolute;
+}
+
+main {
+    position: fixed;
+    right: 0;
+    transition: all ease .5s 0s;
+    z-index: 2;
+    bottom: 0;
+}
+
+#btnMenu {
+    position: fixed;
+    transition: all ease .5s;
+    height: 48px;
+    width: 48px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1em;
+    z-index: 3;
+}
+
+#ge {
+    width: calc(100% - 32px);
+    font-size: 1.2em;
+    color: #fff;
+    background: #09c;
+    border: solid 1px #666;
+    line-height: 2em;
+    margin: 16px;
+}
