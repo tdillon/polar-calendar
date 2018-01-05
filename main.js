@@ -95,6 +95,31 @@ function printCalendar(year) {
 
 
 
+function drawYear(timestamp) {
+    printBackground(currentYear);
+    printYear(currentYear);
+    printCalendar(currentYear);
+    if (currentYear++ !== RingCalendar.endDate.getFullYear()) {
+        requestAnimationFrame(drawYear);
+    }
+}
+
+
+
+function loadCalendar() {
+    canvas.height = canvas.width = RingCalendar.canvasSize;
+    //universal text properties
+    ctx.fillStyle = '#000';
+    ctx.textAlign = 'center';
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    currentYear = RingCalendar.startDate.getFullYear();  //used by drawYears
+    
+    requestAnimationFrame(drawYear);
+}
+
+
+
+let currentYear;  //used by drawYears
 /** @type {HTMLCanvasElement} */
 const canvas = document.querySelector('canvas');
 /** @type {CanvasRenderingContext2D} */
@@ -118,44 +143,18 @@ const btnMenu = document.querySelector('#btnMenu');
 /** @type {HTMLDivElement} */
 const menu = document.querySelector('header');
 
-
-canvas.height = canvas.width = RingCalendar.canvasSize;
-
-var currentYear;  //used by drawYears
-
-//Set universal text properties
-ctx.textAlign = 'center';
-ctx.fillStyle = '#000';
-
-function drawYear(timestamp) {
-    printBackground(currentYear);
-    printYear(currentYear);
-    printCalendar(currentYear);
-    if (currentYear++ !== RingCalendar.endDate.getFullYear()) {
-        requestAnimationFrame(drawYear);
-    }
-}
-
-function loadCalendar() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    currentYear = RingCalendar.startDate.getFullYear();  //used by drawYears
-
-    requestAnimationFrame(drawYear);
-}
-
 sd.value = RingCalendar.startDate.toISOString().slice(0, 10);
 ed.value = RingCalendar.endDate.toISOString().slice(0, 10);
 cs.value = csv.textContent = RingCalendar.canvasSize;
 so.checked = RingCalendar.strikeout;
 ci.checked = RingCalendar.circle;
 
-
-loadCalendar();
-
 ge.addEventListener('click', () => loadCalendar());
 sd.addEventListener('change', evt => RingCalendar.startDate = new Date(evt.target.value));
 ed.addEventListener('change', evt => RingCalendar.endDate = new Date(evt.target.value));
-cs.addEventListener('change', evt => RingCalendar.canvasSize = canvas.height = canvas.width = RingCalendar.canvasSize = csv.textContent = parseInt(evt.target.value));
+cs.addEventListener('change', evt => RingCalendar.canvasSize = csv.textContent = parseInt(evt.target.value));
 so.addEventListener('change', evt => RingCalendar.strikeout = evt.target.checked);
 ci.addEventListener('change', evt => RingCalendar.circle = evt.target.checked);
 btnMenu.addEventListener('click', () => menu.classList.toggle('hidden'));
+
+loadCalendar();
