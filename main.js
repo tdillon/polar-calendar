@@ -8,6 +8,9 @@ function printBackground(year) {
     var d = new Date(year + '-01-01');
     d.setUTCDate(1 - d.getUTCDay());
 
+    let goodRingMod = 1;  //how many distinct year colors should there be?
+    while (RingCalendar.getNumYears() % ++goodRingMod === 1);
+
     for (var h = 0; h < 54; ++h) {  //54 weeks need to be diplayed sometimes, e.g., 2028
         for (var w = 0; w < 7; ++w) {  //7 days per week
             var radius = canvas.height / 2 - RingCalendar.getRingWidth() / 2 - (h * RingCalendar.getRingWidth()) - 1;
@@ -16,12 +19,7 @@ function printBackground(year) {
             ctx.arc(canvas.height/2, canvas.width/2, radius, (startAngle + w * RingCalendar.getWeekdayAngle()) * Math.PI / 180 - (Math.PI / 2) , (startAngle + w * RingCalendar.getWeekdayAngle() + RingCalendar.getWeekdayAngle()) * Math.PI / 180 - (Math.PI / 2));
             ctx.lineWidth = RingCalendar.getRingWidth();
 
-            switch ((ith + d.getUTCMonth()) % 4) {
-                case 0: ctx.strokeStyle = '#fff'; break;
-                case 1: ctx.strokeStyle = '#ddd'; break;
-                case 2: ctx.strokeStyle = '#eee'; break;
-                case 3: ctx.strokeStyle = '#ccc'; break;
-            }
+            ctx.strokeStyle = `hsl(0,0%,${100 - 10 * (year % goodRingMod) - 15 * (d.getUTCMonth() % 2)}%)`;
 
             ctx.stroke();
 
@@ -78,7 +76,6 @@ function printCalendar(year) {
         }
 
         if (RingCalendar.circle && (d.toUTCString() == RingCalendar.startDate.toUTCString() || d.toUTCString() == RingCalendar.endDate.toUTCString())) {
-          console.log(d.toUTCString());
           ctx.lineWidth = 2;
           ctx.strokeRect(
           - (RingCalendar.canvasSize / 2 - RingCalendar.getRingWidth() * week) * Math.sin(RingCalendar.getWeekdayAngleHalf() * Math.PI / 180),
@@ -141,7 +138,6 @@ function drawYear(timestamp) {
 
 function loadCalendar() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    console.log(RingCalendar.startDate.getFullYear());
     currentYear = RingCalendar.startDate.getFullYear();  //used by drawYears
 
     requestAnimationFrame(drawYear);
