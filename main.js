@@ -50,8 +50,8 @@ function printYear(year) {
 
 function printCalendar(year) {
     //Set font for days of year.
-    ctx.font = RingCalendar.getDayFontSize() + 'px "Gill Sans MT",Arial';
-    ctx.textBaseline = 'bottom';
+    ctx.font = `${RingCalendar.getRingWidth()}px "Gill Sans MT",Arial`;
+    ctx.textBaseline = 'middle';
     ctx.strokeStyle = '#f00';  //for strikethrough
 
     var d = new Date(year + '-01-01');
@@ -64,8 +64,8 @@ function printCalendar(year) {
         ctx.save();
         ctx.translate(canvas.height / 2, canvas.width / 2);
         ctx.rotate(angle * Math.PI / 180);
-        ctx.fillText(d.getUTCDate(), 0, -RingCalendar.canvasSize / 2 + 2 /*padding*/ + RingCalendar.getRingWidth() * week);
-        
+        ctx.fillText(d.getUTCDate(), 0, -RingCalendar.canvasSize / 2 + RingCalendar.getRingWidth() * week - RingCalendar.getRingWidth() / 2);
+
         if (RingCalendar.strikeout && d >= RingCalendar.startDate && d < new Date()) {
           ctx.beginPath();
           ctx.lineWidth = 2;
